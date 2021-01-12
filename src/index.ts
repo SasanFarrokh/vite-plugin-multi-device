@@ -10,7 +10,7 @@ const defaultOptions = {
         desktop: true,
     },
     buildFor: process.env.DEVICE || 'desktop',
-    id: 'DEVICE',
+    id: 'Object.DEVICE',
 };
 
 const debug = makeDebug('vite:multi-device');
@@ -41,8 +41,7 @@ export default function multiDevice (options: typeof defaultOptions): Plugin[] {
 
                     res.setHeader('Content-Type', 'application/javascript');
                     res.end(`
-                    window.${options.id} = { ${device}: true }
-                    export default app => app.config.globalProperties[${JSON.stringify(options.id)}] = { ${device}: true }
+                    ${options.id} = { ${device}: true }
                     `);
                     debug(`apply global property ${options.id}`);
                     return;
@@ -94,12 +93,9 @@ export default function multiDevice (options: typeof defaultOptions): Plugin[] {
         name: 'vite:multi-device-build',
         apply: 'build',
         config () {
-            debug('_ctx.' + options.id + '.' + buildFor);
-
             return {
                 define: Object.keys(options.devices).reduce((carry, item) => {
-                    carry['_ctx.' + options.id + '.' + item] = buildFor === item;
-                    carry['window.' + options.id + '.' + item] = buildFor === item;
+                    carry[options.id + '.' + item] = buildFor === item;
                     return carry;
                 }, {}),
             };
