@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-multi-device",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Vite plugin for build application for multiple devices",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/SasanFarrokh/vite-plugin-multi-build/tree/master/#readme",
   "scripts": {
     "dev": "tsup src/index.ts --watch",
-    "build": "tsup src/index.ts --dts",
+    "build": "tsup src/index.ts --external debug --dts",
     "lint": "eslint --fix .",
     "test": "jest",
     "test:watch": "jest --watch",
