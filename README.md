@@ -145,10 +145,15 @@ and use npm-run-all to build them in parallel
 
 In dev server, Object.DEVICE will be set at runtime automatically and changes if you change your device (user-agent). you can use Chrome Devtools.
 
+## Serving website
+
+You could write your own Nodejs http server to serve the outputs to users based on regex, or use a configured nginx server.
+
 ## Configuration
 ```ts
 const defaultOptions = {
     devices: {
+        // Provide regex map for devices based on User Agent
         // regex for mobile detection
         mobile: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/,
 
@@ -162,7 +167,7 @@ const defaultOptions = {
     // Identifier to detect device
     id: 'Object.DEVICE',
 };
-```
+``` 
 
 ## Caveats
 
