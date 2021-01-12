@@ -128,6 +128,10 @@ export default {
 </template>
 ```
 
+Also works with these packages:
+- [https://github.com/vamplate/vite-plugin-voie](https://github.com/vamplate/vite-plugin-voie)
+- [https://github.com/antfu/vite-plugin-components](https://github.com/antfu/vite-plugin-components)
+
 ## Building application
 
 You should change your package.json build commands to something like the example below.
