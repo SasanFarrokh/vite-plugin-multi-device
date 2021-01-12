@@ -1,0 +1,35 @@
+{
+  "name": "vite-plugin-multi-device",
+  "version": "0.0.1",
+  "description": "Vite plugin for build application for multiple devices",
+  "main": "dist/index.js",
+  "type": "dist/index.d.ts",
+  "author": "Sasan Farrokh",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/SasanFarrokh/vite-plugin-multi-build.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SasanFarrokh/vite-plugin-multi-build/issues"
+  },
+  "homepage": "https://github.com/SasanFarrokh/vite-plugin-multi-build/tree/master/#readme",
+  "scripts": {
+    "dev": "tsup src/index.ts --watch",
+    "build": "tsup src/index.ts --dts",
+    "lint": "eslint --fix .",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.6.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "debug": "^4.3.1",
+    "eslint": "^7.17.0",
+    "jest": "^26.4.1",
+    "tsup": "^3.6.1",
+    "typescript": "^4.1.3"
+  }
+}
