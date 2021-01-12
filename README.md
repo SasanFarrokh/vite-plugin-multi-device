@@ -1,10 +1,19 @@
-# Vite plugin for multiple device builds
+<h2 align='center'><strong>vite-plugin-multi-device</strong> 🚀</h2>
 
-> Build your application for multiple devices with Vite [Vite](https://github.com/vitejs/vite)
+<p align='center'>One codebase, Multiple outputs</p>
 
+<p align='center'>
+<a href='https://www.npmjs.com/package/vite-plugin-multi-device'>
+<img src='https://img.shields.io/npm/v/vite-plugin-multi-device?color=f75e5e&style=flat-square'>
+</a>
+</p>
+<br>
 
-One codebase with multiple builds for different devices.
-Also eliminate device specific dead codes with [rollup](https://rollupjs.org/).
+# Vite plugin for multiple device builds 
+
+> Build your application for multiple devices with [Vite](https://github.com/vitejs/vite)
+> 
+> and eliminate dead codes with [rollup](https://rollupjs.org/).
 
 
 ## Installation
