@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-multi-device",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Vite plugin for build application for multiple devices",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
