@@ -50,7 +50,7 @@ Simply use `Object.DEVICE.mobile` or `Object.DEVICE.desktop` variable to detect 
 > You can configure to support more devices in `vite.config.js`.
 > or you can change the identifier to something other than `Object.DEVICE`
 > 
-> We explain it later why we chose this identifier.
+> For more information why we needed to use `Object.DEVICE.mobile` see [caveats](#caveats).
 
 Example:
 
