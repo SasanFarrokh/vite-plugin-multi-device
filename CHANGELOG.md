@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/SasanFarrokh/vite-plugin-multi-device/compare/v0.0.4...v0.0.5) (2021-06-20)
+
+
+### Bug Fixes
+
+* **utils:** resolve device regex bug ([3c91bc5](https://github.com/SasanFarrokh/vite-plugin-multi-device/commit/3c91bc5f4756b25df3d06a99af22ce6b5800ca43))
+
 ### [0.0.4](https://github.com/SasanFarrokh/vite-plugin-multi-device/compare/v0.0.3...v0.0.4) (2021-01-17)
 
 ### [0.0.3](https://github.com/SasanFarrokh/vite-plugin-multi-build/compare/v0.0.2...v0.0.3) (2021-01-12)
