@@ -11,5 +11,5 @@ export function idToFilePath (id: string, root: string): string | false {
 }
 
 export function resolveDeviceFilePath (filePath: string, device: string): string {
-    return filePath.replace(/\.([^?]+)(\?.*)?$/, `.${device}.$1$2`);
+    return filePath.replace(/\.([^\\/?]+)(\?.*)?$/, `.${device}.$1$2`);
 }
