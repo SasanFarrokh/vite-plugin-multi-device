@@ -9,15 +9,13 @@ const DEVICE_MAP: DevicesMap = {
     desktop: true,
 }
 
-export const deviceMiddleware = (devices: DevicesMap): RequestHandler => (req, res, next) => {
-    req.device = resolveDevice(req, devices);
+export const deviceMiddleware = (devicesMap: DevicesMap): RequestHandler => (req, res, next) => {
+    req.device = resolveDevice(req, devicesMap);
     next();
 }
 
-export function createDevServer (root = null, deviceMap = DEVICE_MAP): Application {
+export function devMiddleware (root = null, deviceMap = DEVICE_MAP): RequestHandler[] {
     const { createServer: createViteServer } = require('vite');
-
-    const app = express();
 
     const vite = {} as Record<string, ViteDevServer>;
 
@@ -36,22 +34,36 @@ export function createDevServer (root = null, deviceMap = DEVICE_MAP): Applicati
         }
     })();
 
-    app.use((req, res, next) => {
-        if (Object.keys(vite).length !== Object.keys(deviceMap).length) {
-            res.writeHead(503, { 'Retry-After': '5' });
-            return res.end(fs.readFileSync(path.resolve(__dirname, '../loading.html'), 'utf-8'));
+    const template = fs.readFileSync('./index.html', 'utf-8');
+
+    return [
+        deviceMiddleware(deviceMap),
+        (req, res, next) => {
+            if (!req.device) {
+                return res.end('Device could not be guessed. check your configurations.')
+            }
+
+            if (!vite[req.device]) {
+                res.writeHead(503, { 'Retry-After': '5' });
+                return res.end(fs.readFileSync(path.resolve(__dirname, '../loading.html'), 'utf-8'));
+            }
+
+            vite[req.device].middlewares.handle(req, res, next);
+        },
+        async (req, res) => {
+            const url = req.originalUrl;
+
+            // always read fresh template in dev
+            const html = await vite[req.device!].transformIndexHtml(url, template);
+
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(html);
         }
-        next();
-    });
+    ]
+}
 
-    app.use(deviceMiddleware(deviceMap))
-
-    app.use((req, res, next) => {
-        if (!req.device) {
-            return res.end('Device could not be guessed. check your configurationss.')
-        }
-        vite[req.device].middlewares.handle(req, res, next);
-    });
-
-    return app;
+export function createDevServer(root = null, deviceMap = DEVICE_MAP): Application {
+    const app = express()
+    app.use(devMiddleware(root, deviceMap))
+    return app
 }

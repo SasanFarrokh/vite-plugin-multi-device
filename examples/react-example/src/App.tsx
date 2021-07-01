@@ -11,7 +11,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React! + MultiDevice</p>
         <p>
-          <em>current device -> { window.DEVICE.desktop ? 'desktop' : 'mobile' }</em>
+          <em>current device -&gt; { window.DEVICE.desktop ? 'desktop' : 'mobile' }</em>
         </p>
         <p>
           <button onClick={() => setCount((count) => count + 1)}>

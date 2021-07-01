@@ -6,4 +6,8 @@ declare global {
             device?: string;
         }
     }
+
+    export interface Window {
+        DEVICE: { mobile: string; desktop: string; }
+    }
 }

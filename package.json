@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/SasanFarrokh/vite-plugin-multi-device/tree/master/#readme",
   "scripts": {
-    "dev": "tsup src/index.ts --external fsevents --watch",
+    "dev": "tsup src/index.ts --external fsevents,express,vite --watch",
     "build": "tsup src/index.ts --external debug --external fsevents --dts",
     "lint": "eslint --fix .",
     "test": "jest",
@@ -38,5 +38,8 @@
   },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "peerDependencies": {
+    "vite": "2.x.x"
   }
 }
