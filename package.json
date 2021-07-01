@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/SasanFarrokh/vite-plugin-multi-device/tree/master/#readme",
   "scripts": {
-    "dev": "tsup src/index.ts --external fsevents,express,vite --watch",
-    "build": "tsup src/index.ts --external debug --external fsevents --dts",
+    "dev": "tsc --watch",
+    "build": "tsc --declaration",
     "lint": "eslint --fix .",
     "test": "jest",
     "test:watch": "jest --watch",

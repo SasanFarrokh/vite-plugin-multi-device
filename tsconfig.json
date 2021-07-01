@@ -9,5 +9,6 @@
         "module": "commonjs",
         "lib": ["ESNext"],
         "noImplicitAny": false
-    }
+    },
+    "include": ["src"]
 }

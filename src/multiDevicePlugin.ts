@@ -1,4 +1,4 @@
-import type { Plugin, ResolvedConfig } from 'vite';
+import { Plugin, ResolvedConfig } from 'vite';
 import * as fs from 'fs';
 import makeDebug from 'debug';
 import replacePlugin from '@rollup/plugin-replace';
