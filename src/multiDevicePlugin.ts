@@ -54,7 +54,7 @@ export default function multiDevice (rawOptions?: typeof defaultOptions): Plugin
                 }
             }
         },
-        transform (code: string, id: string, ssr?: boolean) {
+        transform (code: string, id: string) {
             const newCode = replace.transform && replace.transform.call(this, code, id);
             if (newCode) debug('transforming: ' + id);
             return newCode;
