@@ -9,7 +9,3 @@ export function idToFilePath (id: string, root: string): string | false {
 
     return filePath;
 }
-
-export function resolveDeviceFilePath (filePath: string, device: string): string {
-    return filePath.replace(/\.([^\\/?]+)(\?.*)?$/, `.${device}.$1$2`);
-}
