@@ -14,8 +14,9 @@ export const deviceMiddleware = (devicesMap: DevicesMap): RequestHandler => (req
     next();
 }
 
-export function devMiddleware (root = null, deviceMap = DEVICE_MAP): RequestHandler[] {
+export function devMiddleware (root: string | null = null, deviceMap = DEVICE_MAP): RequestHandler[] {
     const { createServer: createViteServer } = require('vite');
+    root = root || process.cwd();
 
     const vite = {} as Record<string, ViteDevServer>;
 
@@ -23,7 +24,7 @@ export function devMiddleware (root = null, deviceMap = DEVICE_MAP): RequestHand
     (async () => {
         for (const device of Object.keys(deviceMap)) {
             vite[device] = await createViteServer({
-                root: root || process.cwd(),
+                root,
                 logLevel: 'info',
                 server: {
                     middlewareMode: true,

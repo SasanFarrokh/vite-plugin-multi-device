@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import { Hello } from "./Hello";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,6 +14,7 @@ function App() {
         <p>
           <em>current device -&gt; { window.DEVICE.desktop ? 'desktop' : 'mobile' }</em>
         </p>
+        <Hello />
         <p>
           <button onClick={() => setCount((count) => count + 1)}>
             count is: {count}
