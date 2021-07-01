@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const vmd = require('../dist/index')
 
 const PORT = process.env.PORT || 3000
