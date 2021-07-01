@@ -1,0 +1,6 @@
+src
+node_modules
+examples
+.vscode
+.idea
+.DS_Store

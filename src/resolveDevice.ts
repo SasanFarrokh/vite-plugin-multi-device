@@ -2,10 +2,10 @@ import { IncomingMessage } from 'http';
 
 const cache = new Map<string, string>();
 
-export function resolveDevice (req: IncomingMessage, devices: Record<string, RegExp | boolean | ((req: IncomingMessage) => string)>): string | undefined {
-    const userAgent = req.headers['user-agent'];
+export type DevicesMap = Record<string, RegExp | boolean | ((req: IncomingMessage) => boolean)>
 
-    if (!userAgent) return;
+export function resolveDevice (req: IncomingMessage, devices: DevicesMap): string | undefined {
+    const userAgent = req.headers['user-agent'] || '';
 
     const cached = cache.get(userAgent);
     if (cached) {
