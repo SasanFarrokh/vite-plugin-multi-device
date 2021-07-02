@@ -86,7 +86,7 @@ There are two ways to code for different devices
 
 Simply use `window.DEVICE.mobile` or `window.DEVICE.desktop` variable to detect user device.
 
-> You can configure to support more devices in `vite.config.js`.
+> You can configure to support more devices in `multidevice.config.js`.
 > or you can change the identifier to something other than `window.DEVICE.mobile` (eg: \_\_MOBILE\_\_)
 
 React Example:
@@ -221,7 +221,7 @@ There are two ways to code for different devices
 
 Simply use `window.DEVICE.mobile` or `window.DEVICE.desktop` variable to detect user device.
 
-> You can configure to support more devices in `vite.config.js`.
+> You can configure to support more devices in `multidevice.config.js`.
 > or you can change the identifier to something other than `window.DEVICE.mobile` (eg: \_\_MOBILE\_\_)
 
 Example:
@@ -327,7 +327,9 @@ You could write your own Nodejs http server to serve the outputs to users based 
 
 ## Configuration
 ```ts
-const defaultOptions = {
+// multidevice.config.js
+
+module.exports = {
     devices: ['desktop', 'mobile'],
 
     // returns the identifiers that should be replaced. by default these two are considered

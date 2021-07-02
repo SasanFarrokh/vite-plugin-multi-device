@@ -1,5 +1,5 @@
-import fs from "fs";
 import { DevicesMap } from "./resolveDevice";
+import path from "path";
 
 const CONFIG_FILE = 'multidevice.config.js';
 
@@ -24,8 +24,10 @@ const defaultConfig: MultiDeviceConfig = {
 export function loadConfig(): MultiDeviceConfig {
     let config: Partial<MultiDeviceConfig> = {};
     try {
-        config = JSON.parse(fs.readFileSync('./' +  CONFIG_FILE, 'utf-8'));
-    } catch (err) {} // eslint-disable-line no-empty
+        config = require(path.resolve(process.cwd(), CONFIG_FILE));
+    } catch (err) {
+        console.error(err);
+    } // eslint-disable-line no-empty
     return {
         ...defaultConfig,
         ...config,
