@@ -90,6 +90,7 @@ Simply use `window.DEVICE.mobile` or `window.DEVICE.desktop` variable to detect 
 React Example:
 
 ```jsx
+// App.jsx
 export function App() {
     return (
       <div>This is { window.DEVICE.desktop ? 'Desktop device' : 'Mobile device' }</div>
