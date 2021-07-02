@@ -20,6 +20,7 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "object-curly-spacing": ["error", "always"],
-        "semi": "error"
+        "semi": "error",
+        "indent": ["error", 4]
     }
 };

@@ -1,5 +1,6 @@
-import multiDevice from './multiDevicePlugin'
+import multiDevice from './multiDevicePlugin';
 
-export * from './server'
+export * from './config';
+export * from './server';
 
-export default multiDevice
+export default multiDevice;

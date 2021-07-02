@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import makeDebug from 'debug';
 import replacePlugin from '@rollup/plugin-replace';
 import { idToFilePath } from './utils';
-import { loadConfig, MultiDeviceConfig } from "./config";
+import { getDevicesArray, loadConfig, MultiDeviceConfig } from "./config";
 
 const debug = makeDebug('vite:multi-device');
 
@@ -26,7 +26,7 @@ export default function multiDevice (rawOptions?: Record<string, unknown>): Plug
         buildFor = (config as any).__DEVICE || process.env[options.env];
         debug('building for "' + buildFor + '"');
 
-        const devicesArray = [...new Set([options.fallback, ...(Array.isArray(options.devices) ? options.devices : Object.keys(options.devices))])];
+        const devicesArray = getDevicesArray(options);
         if (!buildFor || !devicesArray.includes(buildFor)) {
             throw new Error('[vite-plugin-multi-device]: DEVICE is not specified or not listed in devices option: ' + buildFor);
         }

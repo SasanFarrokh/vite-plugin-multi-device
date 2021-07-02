@@ -33,3 +33,7 @@ export function loadConfig(): MultiDeviceConfig {
         ...config,
     };
 }
+
+export function getDevicesArray(config: Pick<MultiDeviceConfig, 'devices' | 'fallback'>) {
+    return [...new Set([config.fallback, ...(Array.isArray(config.devices) ? config.devices : Object.keys(config.devices))])];
+}
