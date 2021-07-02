@@ -207,9 +207,11 @@ To use it, simply build your project with this structure: `dist/DEVICE` then run
 ## Configuration
 ```ts
 // multidevice.config.js
-
 module.exports = {
-    devices: ['desktop', 'mobile'],
+    devices: {
+      mobile: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/,
+    },
+    fallback: 'desktop',
 
     // returns the identifiers that should be replaced. by default these two are considered
     replacement: (device) => ['DEVICE.' + device, 'window.DEVICE.' + device],

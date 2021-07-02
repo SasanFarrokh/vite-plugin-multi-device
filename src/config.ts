@@ -25,15 +25,13 @@ export function loadConfig(): MultiDeviceConfig {
     let config: Partial<MultiDeviceConfig> = {};
     try {
         config = require(path.resolve(process.cwd(), CONFIG_FILE));
-    } catch (err) {
-        console.error(err);
-    } // eslint-disable-line no-empty
+    } catch (err) {} // eslint-disable-line no-empty
     return {
         ...defaultConfig,
         ...config,
     };
 }
 
-export function getDevicesArray(config: Pick<MultiDeviceConfig, 'devices' | 'fallback'>) {
+export function getDevicesArray(config: Pick<MultiDeviceConfig, 'devices' | 'fallback'>): string[] {
     return [...new Set([config.fallback, ...(Array.isArray(config.devices) ? config.devices : Object.keys(config.devices))])];
 }
