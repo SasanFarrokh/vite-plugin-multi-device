@@ -1,5 +1,9 @@
 <h2 align='center'><strong>vite-plugin-multi-device</strong> 🚀</h2>
-
+<p align="center">
+  <a href="https://github.com/SasanFarrokh/vite-plugin-multi-device">
+    <img width="220" src="https://raw.githubusercontent.com/SasanFarrokh/vite-plugin-multi-device/master/logo.svg" alt="logo">
+  </a>
+</p>
 <p align='center'>One codebase, Multiple outputs</p>
 
 <p align='center'>
