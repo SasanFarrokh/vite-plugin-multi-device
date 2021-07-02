@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-multi-device",
-  "version": "0.0.5",
+  "version": "0.1.2-next",
   "description": "Vite plugin for build application for multiple devices",
   "bin": {
     "vmd": "bin/vmd.js"
@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/SasanFarrokh/vite-plugin-multi-device/tree/master/#readme",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc --declaration",
+    "dev": "tsup src/index.ts --external fsevents,express,vite --watch",
+    "build": "tsup src/index.ts --external debug --external fsevents --dts",
     "lint": "eslint --fix .",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -34,6 +34,7 @@
     "debug": "^4.3.1",
     "eslint": "^7.17.0",
     "jest": "^26.4.1",
+    "rollup": "^2.52.7",
     "standard-version": "^9.1.0",
     "tsup": "^3.6.1",
     "typescript": "^4.1.3",
