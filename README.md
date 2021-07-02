@@ -67,11 +67,9 @@ For more ease of use, you can use `vmd` command to run a hybrid dev server to au
 // package.json
 {
   "scripts": {
-    "dev": "vmd", // This will run server with auto detection feature 
-    "dev:desktop": "cross-env DEVICE=desktop vite",
-    "dev:mobile": "cross-env DEVICE=mobile vite",
-    "build:desktop": "cross-env NODE_ENV=production DEVICE=desktop vite build -m $MODE --outDir=dist/desktop",
-    "build:mobile": "cross-env NODE_ENV=production DEVICE=mobile vite build -m $MODE --outDir=dist/mobile"
+    "dev": "vmd", // Run dev server with auto detection feature 
+    "build": "vmd build", // Build project per device
+    "start": "vmd start" // Run a production-ready node.js server
   }
 }
 ```
@@ -185,12 +183,14 @@ Also works with these packages:
 
 You can change your package.json build commands to something like the example below.
 
-```json
+```js
 {
     "scripts": {
         "build:desktop": "cross-env NODE_ENV=production DEVICE=desktop vite build --outDir=dist/desktop",
         "build:mobile": "cross-env NODE_ENV=production DEVICE=mobile vite build --outDir=dist/mobile",
-        "build": "npm-run-all -p build:*",
+        
+        "build": "vmd build", // or simply use vmd command to build all devices.
+
         "start": "vmd start" // production ready node.js server (but you can write your own)
     }
 }
