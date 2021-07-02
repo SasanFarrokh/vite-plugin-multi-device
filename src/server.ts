@@ -24,7 +24,8 @@ export function devMiddleware (root: string | null = null): RequestHandler[] {
 
     // const serverReady: Promise<unknown> =
     (async () => {
-        for (const device of Object.keys(deviceMap)) {
+        const devices = [...new Set([fallback, ...Object.keys(deviceMap)])];
+        for (const device of devices) {
             vite[device] = await createViteServer({
                 root,
                 logLevel: 'info',
@@ -44,7 +45,7 @@ export function devMiddleware (root: string | null = null): RequestHandler[] {
      */
     const viteHandler = (req, res, next) => {
             if (!req.device) {
-                return res.end('Device could not be guessed. check your configurations.');
+                return res.end('Device could not be guessed. check your configurations and ensure a fallback is specified.');
             }
 
             if (!vite[req.device]) {

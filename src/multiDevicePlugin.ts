@@ -7,7 +7,7 @@ import { loadConfig, MultiDeviceConfig } from "./config";
 
 const debug = makeDebug('vite:multi-device');
 
-export default function multiDevice (rawOptions?: Partial<MultiDeviceConfig>): Plugin[] {
+export default function multiDevice (rawOptions?: Record<string, unknown>): Plugin[] {
     if (rawOptions) {
         console.warn('[vite-plugin-multi-device]: passing options to plugin constructor is deprecated, please create multidevice.config.js at root of your project.');
     }
@@ -26,7 +26,7 @@ export default function multiDevice (rawOptions?: Partial<MultiDeviceConfig>): P
         buildFor = (config as any).__DEVICE || process.env[options.env];
         debug('building for "' + buildFor + '"');
 
-        const devicesArray = Array.isArray(options.devices) ? options.devices : Object.keys(options.devices);
+        const devicesArray = [...new Set([options.fallback, ...(Array.isArray(options.devices) ? options.devices : Object.keys(options.devices))])];
         if (!buildFor || !devicesArray.includes(buildFor)) {
             throw new Error('[vite-plugin-multi-device]: DEVICE is not specified or not listed in devices option: ' + buildFor);
         }
