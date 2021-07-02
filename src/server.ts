@@ -1,24 +1,26 @@
 import fs from 'fs';
 import express, { RequestHandler, Application } from 'express';
-import path from 'path'
+import path from 'path';
 import type { ViteDevServer } from 'vite';
 import { DevicesMap, resolveDevice } from './resolveDevice';
+import { loadConfig } from "./config";
 
-const DEVICE_MAP: DevicesMap = {
-    mobile: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/,
-    desktop: true,
-}
-
-export const deviceMiddleware = (devicesMap: DevicesMap): RequestHandler => (req, res, next) => {
-    req.device = resolveDevice(req, devicesMap);
+export const deviceMiddleware = (devicesMap: DevicesMap, fallback: string): RequestHandler => (req, res, next) => {
+    req.device = resolveDevice(req, devicesMap) || fallback;
     next();
-}
+};
 
-export function devMiddleware (root: string | null = null, deviceMap = DEVICE_MAP): RequestHandler[] {
+export function devMiddleware (root: string | null = null): RequestHandler[] {
     const { createServer: createViteServer } = require('vite');
     root = root || process.cwd();
 
     const vite = {} as Record<string, ViteDevServer>;
+
+    const { devices: deviceMap, fallback } = loadConfig();
+
+    if (Array.isArray(deviceMap)) {
+        throw new Error('[vite-plugin-multi-device]: to use `vmd` dev server, you should specify devices as an object');
+    }
 
     // const serverReady: Promise<unknown> =
     (async () => {
@@ -37,11 +39,12 @@ export function devMiddleware (root: string | null = null, deviceMap = DEVICE_MA
 
     const template = fs.readFileSync('./index.html', 'utf-8');
 
-    return [
-        deviceMiddleware(deviceMap),
-        (req, res, next) => {
+    /**
+     * Handles Vite transformation
+     */
+    const viteHandler = (req, res, next) => {
             if (!req.device) {
-                return res.end('Device could not be guessed. check your configurations.')
+                return res.end('Device could not be guessed. check your configurations.');
             }
 
             if (!vite[req.device]) {
@@ -50,21 +53,30 @@ export function devMiddleware (root: string | null = null, deviceMap = DEVICE_MA
             }
 
             vite[req.device].middlewares.handle(req, res, next);
-        },
-        async (req, res) => {
-            const url = req.originalUrl;
+        };
 
-            // always read fresh template in dev
-            const html = await vite[req.device!].transformIndexHtml(url, template);
+    /**
+     * Handles final html serve with vite transformIndexHtml api
+     */
+    const htmlHandler = async (req, res) => {
+        const url = req.originalUrl;
 
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(html);
-        }
-    ]
+        // always read fresh template in dev
+        const html = await vite[req.device!].transformIndexHtml(url, template);
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
+    };
+
+    return [
+        deviceMiddleware(deviceMap, fallback),
+        viteHandler,
+        htmlHandler
+    ];
 }
 
-export function createDevServer(root = null, deviceMap = DEVICE_MAP): Application {
-    const app = express()
-    app.use(devMiddleware(root, deviceMap))
-    return app
+export function createDevServer(root = null): Application {
+    const app = express();
+    app.use(devMiddleware(root));
+    return app;
 }

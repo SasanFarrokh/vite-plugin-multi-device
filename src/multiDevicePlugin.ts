@@ -3,18 +3,19 @@ import * as fs from 'fs';
 import makeDebug from 'debug';
 import replacePlugin from '@rollup/plugin-replace';
 import { idToFilePath } from './utils';
-
-const defaultOptions = {
-    devices: ['desktop', 'mobile'] as string[],
-    replacement: (device: string): string | string[] => ['DEVICE.' + device, 'window.DEVICE.' + device],
-    resolvePath: (path: string, device: string): string => path.replace(/\.([^?/\\]+)(\?.*)?$/, `.${device}.$1$2`),
-    env: 'DEVICE'
-};
+import { loadConfig, MultiDeviceConfig } from "./config";
 
 const debug = makeDebug('vite:multi-device');
 
-export default function multiDevice (rawOptions?: typeof defaultOptions): Plugin[] {
-    const options = { ...defaultOptions, ...(rawOptions || {}) };
+export default function multiDevice (rawOptions?: Partial<MultiDeviceConfig>): Plugin[] {
+    if (rawOptions) {
+        console.warn('[vite-plugin-multi-device]: passing options to plugin constructor is deprecated, please create multidevice.config.js at root of your project.');
+    }
+
+    const options: MultiDeviceConfig = {
+        ...loadConfig(),
+        ...(rawOptions || {})
+    };
 
     let replacements, buildFor, replace;
     let config: ResolvedConfig;
@@ -25,14 +26,15 @@ export default function multiDevice (rawOptions?: typeof defaultOptions): Plugin
         buildFor = (config as any).__DEVICE || process.env[options.env];
         debug('building for "' + buildFor + '"');
 
-        if (!buildFor || !options.devices.includes(buildFor)) {
-            throw new Error('vite-plugin-multi-device: DEVICE is not specified or not listed in devices option: ' + buildFor);
+        const devicesArray = Array.isArray(options.devices) ? options.devices : Object.keys(options.devices);
+        if (!buildFor || !devicesArray.includes(buildFor)) {
+            throw new Error('[vite-plugin-multi-device]: DEVICE is not specified or not listed in devices option: ' + buildFor);
         }
 
-        replacements = options.devices.reduce((carry, item) => {
+        replacements = devicesArray.reduce((carry, item) => {
             ([] as string[]).concat(options.replacement(item)).forEach(id => {
-                carry[id] = buildFor === item
-            })
+                carry[id] = buildFor === item;
+            });
             return carry;
         }, {});
         replace = replacePlugin({
