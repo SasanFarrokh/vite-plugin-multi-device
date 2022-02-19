@@ -2,12 +2,13 @@ import { Plugin, ResolvedConfig } from 'vite';
 import * as fs from 'fs';
 import makeDebug from 'debug';
 import replacePlugin from '@rollup/plugin-replace';
+import { createUnplugin } from 'unplugin';
 import { idToFilePath } from './utils';
 import { getDevicesArray, loadConfig, MultiDeviceConfig } from "./config";
 
 const debug = makeDebug('vite:multi-device');
 
-export default function multiDevice (rawOptions?: Record<string, unknown>): Plugin[] {
+export default function multiDevice (rawOptions?: Record<string, unknown>) {
     if (rawOptions) {
         console.warn('[vite-plugin-multi-device]: passing options to plugin constructor is deprecated, please create multidevice.config.js at root of your project.');
     }
@@ -42,9 +43,9 @@ export default function multiDevice (rawOptions?: Record<string, unknown>): Plug
         });
     }
 
-    return [{
+    return {
         name: 'vite:multi-device',
-        enforce: 'pre',
+        enforce: 'pre' as const,
         configResolved,
         resolveId (id) {
             const filePath = idToFilePath(id, config.root);
@@ -61,5 +62,10 @@ export default function multiDevice (rawOptions?: Record<string, unknown>): Plug
             if (newCode) debug('transforming: ' + id);
             return newCode;
         },
-    }];
+    };
 }
+
+const unplugin = createUnplugin(multiDevice);
+
+export const multiDeviceWebpackPlugin = unplugin.webpack;
+export const multiDeviceRollupPlugin = unplugin.rollup;
